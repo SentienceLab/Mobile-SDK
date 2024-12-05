@@ -1,24 +1,24 @@
-# MetaMask Android SDK
-![Maven Central](https://img.shields.io/maven-central/v/io.metamask.androidsdk/metamask-android-sdk)
+# Sentience Android SDK
+![Maven Central](https://img.shields.io/maven-central/v/io.sentience.androidsdk/sentience-android-sdk)
 
-Import MetaMask SDK into your native Android dapp to enable your users to easily connect with their
-MetaMask Mobile wallet.
+Import Sentience SDK into your native Android dapp to enable your users to easily connect with their
+Sentience Mobile wallet.
 
 See the following for more information:
 
 - [Example Android dapp](app)
-- Documentation for [setting up the SDK in your Android dapp](https://docs.metamask.io/wallet/how-to/connect/set-up-sdk/mobile/android/)
-- Documentation for the [Android SDK architecture](https://docs.metamask.io/wallet/concepts/sdk/android/)
+- Documentation for [setting up the SDK in your Android dapp](https://docs.sentience.io/wallet/how-to/connect/set-up-sdk/mobile/android/)
+- Documentation for the [Android SDK architecture](https://docs.sentience.io/wallet/concepts/sdk/android/)
 
-You can also see the [JavaScript SDK repository](https://github.com/MetaMask/metamask-sdk) and the
-[iOS SDK repository](https://github.com/MetaMask/metamask-ios-sdk).
+You can also see the [JavaScript SDK repository](https://github.com/sentience/sentience-sdk) and the
+[iOS SDK repository](https://github.com/sentience/sentience-ios-sdk).
 
 ## Prerequisites
 
-- MetaMask Mobile version 7.6.0 or above installed on your target device (that is, a physical
+- Sentience Mobile version 7.6.0 or above installed on your target device (that is, a physical
   device or emulator).
-  You can install MetaMask Mobile from [Google Play](https://play.google.com/store/apps/details?id=io.metamask),
-  or clone and compile MetaMask Mobile from [source](https://github.com/MetaMask/metamask-mobile)
+  You can install Sentience Mobile from [Google Play](https://play.google.com/store/apps/details?id=io.sentience),
+  or clone and compile Sentience Mobile from [source](https://github.com/sentience/sentience-mobile)
   and build to your target device.
 - Android SDK version 23 or above.
 
@@ -31,7 +31,7 @@ add the following entry to the `dependencies` block:
 
 ```gradle title="build.gradle"
 dependencies {
-    implementation 'io.metamask.androidsdk:metamask-android-sdk:0.5.4'
+    implementation 'io.sentience.androidsdk:sentience-android-sdk:0.5.4'
 }
 ```
 
@@ -43,12 +43,12 @@ Once the syncing completes, you can set up the rest of your project.
 Import the SDK by adding the following line to the top of your project file:
 
 ```kotlin
-import io.metamask.androidsdk.Ethereum
+import io.sentience.androidsdk.Ethereum
 ```
 
 ### 3. Connect your dapp
 
-We have provided a convenient way to make rpc requests without having to first make a connect request. Please refer to [Connect With Request](#5-connect-with-request) for examples. Otherwise you can connect your dapp to MetaMask in one of two ways:
+We have provided a convenient way to make rpc requests without having to first make a connect request. Please refer to [Connect With Request](#5-connect-with-request) for examples. Otherwise you can connect your dapp to Sentience in one of two ways:
 
 1. [Use the `ethereum` provider object directly](#31-use-the-provider-object-directly).
    We recommend using this method in a pure model layer.
@@ -57,13 +57,13 @@ We have provided a convenient way to make rpc requests without having to first m
    survives configuration changes and can be shared across all views.
 
 > **Note:**
-> By default, MetaMask logs three SDK events: `connection_request`, `connected`, and `disconnected`.
-> This allows MetaMask to monitor any SDK connection issues.
+> By default, sentience logs three SDK events: `connection_request`, `connected`, and `disconnected`.
+> This allows sentience to monitor any SDK connection issues.
 > To disable this, set `ethereum.enableDebug = false`.
 
 #### 3.1. Use the provider object directly
 
-The SDK supports both callbacks and coroutines. If using callbacks use `Ethereum` object and if using coroutines use `EthereumFlow` object. Use the `Ethereum` or `EthereumFlow`  provider object directly to connect your dapp to MetaMask by adding the following
+The SDK supports both callbacks and coroutines. If using callbacks use `Ethereum` object and if using coroutines use `EthereumFlow` object. Use the `Ethereum` or `EthereumFlow`  provider object directly to connect your dapp to Sentience by adding the following
 code to your project file:
 
 ```kotlin
@@ -108,7 +108,7 @@ class SomeModel(context: Context) {
 
 #### 3.2. Use a ViewModel
 
-To connect your dapp to MetaMask using a ViewModel, create a ViewModel that injects the
+To connect your dapp to Sentience using a ViewModel, create a ViewModel that injects the
 `Ethereum/EthereumFlow` provider object, then add wrapper functions for each Ethereum method you wish to call. The example dapp uses `EthereumViewModel` for the callback API and `EthereumFlowViewModel` for the coroutine API. The rest of the examples use the coroutine option
 
 You can use a dependency manager such as [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
@@ -169,17 +169,17 @@ ethereumViewModel.connect()
 ```
 
 See the example dapp's
-[`EthereumViewModel.kt`](app/src/main/java/com/metamask/dapp/EthereumViewModel.kt) file for more information.
+[`EthereumViewModel.kt`](app/src/main/java/com/sentience/dapp/EthereumViewModel.kt) file for more information.
 
 ### 4. Call methods
 
-You can now call any [JSON-RPC API method](https://docs.metamask.io/wallet/reference/eth_subscribe/)
+You can now call any [JSON-RPC API method](https://docs.sentience.io/wallet/reference/eth_subscribe/)
 using `ethereum.sendRequest()`. We also have convenience methods for most common RPC calls so that you don't have to manually construct requests.
 
 #### Example: Get account balance
 
 The following example gets the user's account balance by calling
-[`eth_getBalance`](https://docs.metamask.io/wallet/reference/eth_getbalance/).
+[`eth_getBalance`](https://docs.sentience.io/wallet/reference/eth_getbalance/).
 This is a read-only rpc ("direct call"), which uses the Infura API if an infuraAPIKey is provided in the SDKOptions - which we highly recommend as it provides a seamless use experience.
 
 ```kotlin
@@ -200,7 +200,7 @@ when (balance) {
 #### Example: Sign message
 
 The following example requests the user sign a message by calling
-[`eth_signTypedData_v4`](https://docs.metamask.io/wallet/reference/eth_signtypeddata_v4/).
+[`eth_signTypedData_v4`](https://docs.sentience.io/wallet/reference/eth_signtypeddata_v4/).
 
 ```kotlin
 val message = "{\"domain\":{\"chainId\":\"${ethereum.chainId}\",\"name\":\"Ether Mail\",\"verifyingContract\":\"0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC\",\"version\":\"1\"},\"message\":{\"contents\":\"Hello, Busa!\",\"from\":{\"name\":\"Kinno\",\"wallets\":[\"0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826\",\"0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF\"]},\"to\":[{\"name\":\"Busa\",\"wallets\":[\"0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB\",\"0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57\",\"0xB0B0b0b0b0b0B000000000000000000000000000\"]}]},\"primaryType\":\"Mail\",\"types\":{\"EIP712Domain\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"version\",\"type\":\"string\"},{\"name\":\"chainId\",\"type\":\"uint256\"},{\"name\":\"verifyingContract\",\"type\":\"address\"}],\"Group\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"members\",\"type\":\"Person[]\"}],\"Mail\":[{\"name\":\"from\",\"type\":\"Person\"},{\"name\":\"to\",\"type\":\"Person[]\"},{\"name\":\"contents\",\"type\":\"string\"}],\"Person\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"wallets\",\"type\":\"address[]\"}]}}"
@@ -221,7 +221,7 @@ when (result) {
 #### Example: Request batching
 
 The following example requests the user to personal sign a batch of messages each of
-[`personal_sign`](https://docs.metamask.io/wallet/reference/personal_sign/) using `metamask_batch` rpc.
+[`personal_sign`](https://docs.sentience.io/wallet/reference/personal_sign/) using `sentience_batch` rpc.
 
 ```kotlin
 val messages: List<String> = listOf("First message", "Second message", "Last message")
@@ -249,7 +249,7 @@ when (val result = ethereum.sendRequestBatch(requestBatch)) {
 #### Example: Send transaction
 
 The following example sends a transaction by calling
-[`eth_sendTransaction`](https://docs.metamask.io/wallet/reference/eth_sendtransaction/).
+[`eth_sendTransaction`](https://docs.sentience.io/wallet/reference/eth_sendtransaction/).
 
 ```kotlin
 // Create parameters
@@ -272,8 +272,8 @@ when (val result = ethereum.sendTransaction(from, to, amount)) {
 #### Example: Switch chain
 
 The following example switches to a new Ethereum chain by calling
-[`wallet_switchEthereumChain`](https://docs.metamask.io/wallet/reference/wallet_switchethereumchain/)
-and [`wallet_addEthereumChain`](https://docs.metamask.io/wallet/reference/wallet_addethereumchain/).
+[`wallet_switchEthereumChain`](https://docs.sentience.io/wallet/reference/wallet_switchethereumchain/)
+and [`wallet_addEthereumChain`](https://docs.sentience.io/wallet/reference/wallet_addethereumchain/).
 
 ```kotlin
 val result = ethereum.switchEthereumChain(chainId)
@@ -284,7 +284,7 @@ when(result) {
     }
     is Result.Error -> {
         if (result.error.code == ErrorType.UNRECOGNIZED_CHAIN_ID.code || result.error.code == ErrorType.SERVER_ERROR.code) {
-            val message = "${Network.chainNameFor(chainId)} ($chainId) has not been added to your MetaMask wallet. Add chain?"
+            val message = "${Network.chainNameFor(chainId)} ($chainId) has not been added to your sentience wallet. Add chain?"
             SwitchChainResult.Error(result.error.code, message)
         } else {
             SwitchChainResult.Error(result.error.code,"Add chain error: ${result.error.message}")
